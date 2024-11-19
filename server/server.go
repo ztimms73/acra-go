@@ -9,10 +9,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/abbot/go-http-auth"
-	"github.com/elazarl/go-bindata-assetfs"
+	auth "github.com/abbot/go-http-auth"
+	assetfs "github.com/elazarl/go-bindata-assetfs"
 
-	"github.com/gen2brain/acra-go/database"
+	"github.com/ztimms73/acra-go/database"
 )
 
 const (
@@ -78,7 +78,7 @@ func (s *Server) ListenAndServe() {
 		w.Write([]byte("User-agent: *\nDisallow: /"))
 	})
 
-	http.Handle("/assets/", http.FileServer(&assetfs.AssetFS{Asset, AssetDir, AssetInfo, ""}))
+	http.Handle("/assets/", http.FileServer(&assetfs.AssetFS{Asset: Asset, AssetDir: AssetDir, AssetInfo: AssetInfo, Prefix: ""}))
 
 	http.Handle("/", newAuthHandler(NewIndex(), authFrontend))
 
